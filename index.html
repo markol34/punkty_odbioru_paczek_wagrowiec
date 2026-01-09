@@ -3,43 +3,47 @@
 <head>
   <meta charset="utf-8" />
   <title>Punkty odbioru paczek – Wągrowiec</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Leaflet -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   />
 
   <style>
-    html, body {
+    html, body, #map {
       height: 100%;
       margin: 0;
     }
-    #map {
-      width: 100%;
-      height: 100%;
+
+    .legend {
+      background: white;
+      padding: 8px;
+      font-size: 13px;
+      line-height: 1.6em;
+    }
+
+    .legend img {
+      vertical-align: middle;
+      margin-right: 6px;
     }
   </style>
 </head>
 
 <body>
-  <div id="map"></div>
+<div id="map"></div>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <script>
-    // 1. Inicjalizacja mapy
-    const map = L.map('map').setView([52.808, 17.200], 13);
-
-    // 2. Podkład OSM
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
+/* MAPA */
+const map = L.map('map').setView([52.808, 17.200], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+/* IKONY */
 const icons = {
   "Automat paczkowy": L.icon({
     iconUrl: "automat_paczkowy.svg",
@@ -66,39 +70,46 @@ const icons = {
     popupAnchor: [0, -28]
   })
 };
+
+/* GEOJSON */
+fetch('pkt_odbioru_paczek.geojson?v=4')
+  .then(res => res.json())
+  .then(data => {
+
+    L.geoJSON(data, {
+      pointToLayer: (feature, latlng) => {
+        const typ = feature.properties.Typ;
+        const icon = icons[typ] || icons["Automat paczkowy"];
+        return L.marker(latlng, { icon });
+      },
+
+      onEachFeature: (feature, layer) => {
+        const p = feature.properties;
+        layer.bindPopup(`
+          <b>${p.Nazwa || "—"}</b><br>
+          <b>Typ:</b> ${p.Typ}<br>
+          <b>Adres:</b> ${p.Adres}<br>
+          <b>Operator:</b> ${p["Operator usługi"] || "—"}<br>
+          <b>Godziny:</b> ${p["Godziny otwarcia"] || "—"}
+        `);
+      }
+    }).addTo(map);
+  });
+
+/* LEGENDA */
+const legend = L.control({ position: "bottomright" });
+legend.onAdd = () => {
+  const div = L.DomUtil.create("div", "legend");
+  div.innerHTML = `
+    <b>Punkty odbioru paczek</b><br>
+    <img src="automat_paczkowy.svg" width="18"> Automat paczkowy<br>
+    <img src="punkt_odbioru_sklep.svg" width="18"> Punkt partnerski<br>
+    <img src="placowka_pocztowa.svg" width="18"> Placówka pocztowa<br>
+    <img src="stacja_paliw.svg" width="18"> Stacja paliw
+  `;
+  return div;
+};
+legend.addTo(map);
 </script>
-
-    
-    fetch('pkt_odbioru_paczek.geojson')
-      .then(response => response.json())
-      .then(data => {
-
-        L.geoJSON(data, {
-          pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
-              radius: 6,
-              fillColor: '#ff0000',
-              color: '#000',
-              weight: 1,
-              fillOpacity: 0.8
-            });
-          },
-          onEachFeature: function (feature, layer) {
-            const p = feature.properties;
-
-            layer.bindPopup(
-              `<b>${p.Nazwa}</b><br>
-               Typ: ${p.Typ}<br>
-               Adres: ${p.Adres}<br>
-               Operator: ${p["Operator usługi"]}<br>
-               Godziny: ${p["Godziny otwarcia"]}`
-            );
-          }
-        }).addTo(map);
-
-      })
-      .catch(err => console.error(err));
-  </script>
 </body>
 </html>
-
