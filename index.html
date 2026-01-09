@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   <title>Punkty odbioru paczek – Wągrowiec</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,21 +11,13 @@
   />
 
   <style>
-    html, body, #map {
+    html, body {
       height: 100%;
       margin: 0;
     }
-
-    .legend {
-      background: white;
-      padding: 8px;
-      font-size: 13px;
-      line-height: 1.6em;
-    }
-
-    .legend img {
-      vertical-align: middle;
-      margin-right: 6px;
+    #map {
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
@@ -72,44 +64,40 @@ const icons = {
 };
 
 /* GEOJSON */
-fetch('pkt_odbioru_paczek.geojson?v=4')
+fetch('pkt_odbioru_paczek.geojson?v=1')
   .then(res => res.json())
   .then(data => {
 
     L.geoJSON(data, {
-      pointToLayer: (feature, latlng) => {
+      pointToLayer: function (feature, latlng) {
         const typ = feature.properties.Typ;
-        const icon = icons[typ] || icons["Automat paczkowy"];
-        return L.marker(latlng, { icon });
+        const icon = icons[typ];
+
+        if (!icon) {
+          console.warn("Brak ikony dla typu:", typ);
+        }
+
+        return L.marker(latlng, {
+          icon: icon || icons["Automat paczkowy"]
+        });
       },
 
-      onEachFeature: (feature, layer) => {
+      onEachFeature: function (feature, layer) {
         const p = feature.properties;
-        layer.bindPopup(`
-          <b>${p.Nazwa || "—"}</b><br>
-          <b>Typ:</b> ${p.Typ}<br>
-          <b>Adres:</b> ${p.Adres}<br>
-          <b>Operator:</b> ${p["Operator usługi"] || "—"}<br>
-          <b>Godziny:</b> ${p["Godziny otwarcia"] || "—"}
-        `);
+
+        layer.bindPopup(
+          `<b>${p.Nazwa || ""}</b><br>
+           Typ: ${p.Typ}<br>
+           Adres: ${p.Adres}<br>
+           Operator: ${p["Operator usługi"] || ""}<br>
+           Godziny: ${p["Godziny otwarcia"] || ""}`
+        );
       }
     }).addTo(map);
-  });
 
-/* LEGENDA */
-const legend = L.control({ position: "bottomright" });
-legend.onAdd = () => {
-  const div = L.DomUtil.create("div", "legend");
-  div.innerHTML = `
-    <b>Punkty odbioru paczek</b><br>
-    <img src="automat_paczkowy.svg" width="18"> Automat paczkowy<br>
-    <img src="punkt_odbioru_sklep.svg" width="18"> Punkt partnerski<br>
-    <img src="placowka_pocztowa.svg" width="18"> Placówka pocztowa<br>
-    <img src="stacja_paliw.svg" width="18"> Stacja paliw
-  `;
-  return div;
-};
-legend.addTo(map);
+  })
+  .catch(err => console.error(err));
 </script>
+
 </body>
 </html>
