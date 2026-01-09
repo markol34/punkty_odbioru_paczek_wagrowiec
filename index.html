@@ -39,7 +39,36 @@
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // 3. Wczytanie GeoJSON
+<script>
+const icons = {
+  "Automat paczkowy": L.icon({
+    iconUrl: "automat_paczkowy.svg",
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  }),
+  "Placówka pocztowa": L.icon({
+    iconUrl: "placowka_pocztowa.svg",
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  }),
+  "Punkt partnerski": L.icon({
+    iconUrl: "punkt_odbioru_sklep.svg",
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  }),
+  "Stacja paliw": L.icon({
+    iconUrl: "stacja_paliw.svg",
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  })
+};
+</script>
+
+    
     fetch('pkt_odbioru_paczek.geojson')
       .then(response => response.json())
       .then(data => {
