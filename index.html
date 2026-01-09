@@ -89,8 +89,8 @@ fetch('pkt_odbioru_paczek.geojson?v=1')
           `<b>${p.Nazwa || ""}</b><br>
            Typ: ${p.Typ}<br>
            Adres: ${p.Adres}<br>
-           Operator: ${p["Operator usługi"] || ""}<br>
-           Godziny: ${p["Godziny otwarcia"] || ""}`
+           Operator usługi: ${p["Operator usługi"] || ""}<br>
+           Godziny otwarcia: ${p["Godziny otwarcia"] || ""}`
         );
       }
     }).addTo(map);
