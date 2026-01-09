@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <title>Punkty odbioru paczek – Wągrowiec</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Leaflet CSS -->
+  <!-- Leaflet -->
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -22,22 +23,53 @@
     }
   </style>
 </head>
+
 <body>
+  <div id="map"></div>
 
-<div id="map"></div>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // 1. Inicjalizacja mapy
+    const map = L.map('map').setView([52.808, 17.200], 13);
 
-<script>
-  // Inicjalizacja mapy – środek Wągrowca
-  var map = L.map('map').setView([52.8078, 17.2006], 13);
+    // 2. Podkład OSM
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-  // Podkład OSM
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
-</script>
+    // 3. Wczytanie GeoJSON
+    fetch('pkt_odbioru_paczek.geojson')
+      .then(response => response.json())
+      .then(data => {
 
+        L.geoJSON(data, {
+          pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, {
+              radius: 6,
+              fillColor: '#ff0000',
+              color: '#000',
+              weight: 1,
+              fillOpacity: 0.8
+            });
+          },
+          onEachFeature: function (feature, layer) {
+            const p = feature.properties;
+
+            layer.bindPopup(
+              `<b>${p.Nazwa}</b><br>
+               Typ: ${p.Typ}<br>
+               Adres: ${p.Adres}<br>
+               Operator: ${p["Operator usługi"]}<br>
+               Godziny: ${p["Godziny otwarcia"]}`
+            );
+          }
+        }).addTo(map);
+
+      })
+      .catch(err => console.error(err));
+  </script>
 </body>
 </html>
+
