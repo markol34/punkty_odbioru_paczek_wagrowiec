@@ -70,6 +70,16 @@
       height: 26px;
       margin-right: 8px;
     }
+
+    /* Autor */
+    .author {
+      background: white;
+      padding: 6px 10px;
+      font-size: 13px;
+      border: 2px solid #000;
+      border-radius: 5px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    }
   </style>
 </head>
 
@@ -94,7 +104,7 @@
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Ikony – powiększone
+    // Ikony
     const icons = {
       "Automat paczkowy": L.icon({
         iconUrl: "automat_paczkowy.svg",
@@ -122,7 +132,7 @@
       })
     };
 
-    // Wczytanie GeoJSON
+    // Punkty
     fetch('pkt_odbioru_paczek.geojson')
       .then(response => response.json())
       .then(data => {
@@ -149,7 +159,7 @@
 
       });
 
-    // LEGENDA – POPRAWIONA KOLEJNOŚĆ
+    // Legenda
     const legend = L.control({ position: "bottomright" });
 
     legend.onAdd = function () {
@@ -166,6 +176,17 @@
     };
 
     legend.addTo(map);
+
+    // Autor
+    const author = L.control({ position: "bottomleft" });
+
+    author.onAdd = function () {
+      const div = L.DomUtil.create("div", "author");
+      div.innerHTML = "Autor: Martyna Kołodziejczuk";
+      return div;
+    };
+
+    author.addTo(map);
   </script>
 
 </body>
