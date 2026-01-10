@@ -94,7 +94,7 @@
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Ikony – POWIĘKSZONE
+    // Ikony – powiększone
     const icons = {
       "Automat paczkowy": L.icon({
         iconUrl: "automat_paczkowy.svg",
@@ -102,14 +102,14 @@
         iconAnchor: [17, 34],
         popupAnchor: [0, -34]
       }),
-      "Placówka pocztowa": L.icon({
-        iconUrl: "placowka_pocztowa.svg",
+      "Punkt partnerski": L.icon({
+        iconUrl: "punkt_odbioru_sklep.svg",
         iconSize: [34, 34],
         iconAnchor: [17, 34],
         popupAnchor: [0, -34]
       }),
-      "Punkt partnerski": L.icon({
-        iconUrl: "punkt_odbioru_sklep.svg",
+      "Placówka pocztowa": L.icon({
+        iconUrl: "placowka_pocztowa.svg",
         iconSize: [34, 34],
         iconAnchor: [17, 34],
         popupAnchor: [0, -34]
@@ -130,8 +130,9 @@
         L.geoJSON(data, {
           pointToLayer: function (feature, latlng) {
             const typ = feature.properties.Typ;
-            const icon = icons[typ] || icons["Automat paczkowy"];
-            return L.marker(latlng, { icon: icon });
+            return L.marker(latlng, {
+              icon: icons[typ] || icons["Automat paczkowy"]
+            });
           },
           onEachFeature: function (feature, layer) {
             const p = feature.properties;
@@ -148,7 +149,7 @@
 
       });
 
-    // Legenda
+    // LEGENDA – POPRAWIONA KOLEJNOŚĆ
     const legend = L.control({ position: "bottomright" });
 
     legend.onAdd = function () {
@@ -157,8 +158,8 @@
       div.innerHTML =
         "<h4>Legenda</h4>" +
         "<div class='legend-item'><img src='automat_paczkowy.svg'> Automat paczkowy</div>" +
-        "<div class='legend-item'><img src='placowka_pocztowa.svg'> Placówka pocztowa</div>" +
         "<div class='legend-item'><img src='punkt_odbioru_sklep.svg'> Punkt partnerski</div>" +
+        "<div class='legend-item'><img src='placowka_pocztowa.svg'> Placówka pocztowa</div>" +
         "<div class='legend-item'><img src='stacja_paliw.svg'> Stacja paliw</div>";
 
       return div;
