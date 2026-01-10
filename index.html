@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>Punkty odbioru paczek – Wągrowiec</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Leaflet -->
@@ -15,137 +16,156 @@
     html, body {
       height: 100%;
       margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
     }
+
+    /* Pasek tytułowy */
+    #title-bar {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      background: white;
+      border: 2px solid #000;
+      padding: 10px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
     #map {
       width: 100%;
       height: 100%;
     }
 
-    /* LEGENDA */
+    /* Legenda */
     .legend {
       background: white;
-      padding: 10px 12px;
-      font-size: 13px;
-      line-height: 1.4;
-      color: #333;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      border-radius: 5px;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #000;
+      border: 2px solid #000;
+      border-radius: 6px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.4);
     }
 
     .legend h4 {
-      margin: 0 0 6px 0;
-      font-size: 14px;
-      font-weight: bold;
+      margin: 0 0 8px 0;
+      font-size: 15px;
+      text-align: center;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .legend-item img {
-      width: 18px;
-      height: 18px;
-      margin-right: 6px;
+      width: 26px;
+      height: 26px;
+      margin-right: 8px;
     }
   </style>
 </head>
 
 <body>
-<div id="map"></div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Tytuł mapy -->
+  <div id="title-bar">
+    Punkty odbioru paczek na terenie miasta Wągrowiec
+  </div>
 
-<script>
-/* MAPA */
-const map = L.map('map').setView([52.808, 17.200], 13);
+  <div id="map"></div>
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
-}).addTo(map);
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-/* IKONY */
-const icons = {
-  "Automat paczkowy": L.icon({
-    iconUrl: "automat_paczkowy.svg",
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -28]
-  }),
-  "Placówka pocztowa": L.icon({
-    iconUrl: "placowka_pocztowa.svg",
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -28]
-  }),
-  "Punkt partnerski": L.icon({
-    iconUrl: "punkt_odbioru_sklep.svg",
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -28]
-  }),
-  "Stacja paliw": L.icon({
-    iconUrl: "stacja_paliw.svg",
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -28]
-  })
-};
+  <script>
+    // Inicjalizacja mapy
+    const map = L.map('map').setView([52.808, 17.200], 13);
 
-/* WARSTWA GEOJSON */
-fetch('pkt_odbioru_paczek.geojson?v=2')
-  .then(res => res.json())
-  .then(data => {
-
-    L.geoJSON(data, {
-      pointToLayer: function (feature, latlng) {
-        const typ = feature.properties.Typ;
-        return L.marker(latlng, {
-          icon: icons[typ] || icons["Automat paczkowy"]
-        });
-      },
-
-      onEachFeature: function (feature, layer) {
-        const p = feature.properties;
-
-        layer.bindPopup(
-          `<b>${p.Nazwa || ""}</b><br>
-           <b>Typ:</b> ${p.Typ}<br>
-           <b>Adres:</b> ${p.Adres}<br>
-           <b>Operator:</b> ${p["Operator usługi"] || ""}<br>
-           <b>Godziny:</b> ${p["Godziny otwarcia"] || ""}`
-        );
-      }
+    // Podkład OSM
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
     }).addTo(map);
-  })
-  .catch(err => console.error(err));
 
-/* LEGENDA */
-const legend = L.control({ position: 'bottomright' });
+    // Ikony – POWIĘKSZONE
+    const icons = {
+      "Automat paczkowy": L.icon({
+        iconUrl: "automat_paczkowy.svg",
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -34]
+      }),
+      "Placówka pocztowa": L.icon({
+        iconUrl: "placowka_pocztowa.svg",
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -34]
+      }),
+      "Punkt partnerski": L.icon({
+        iconUrl: "punkt_odbioru_sklep.svg",
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -34]
+      }),
+      "Stacja paliw": L.icon({
+        iconUrl: "stacja_paliw.svg",
+        iconSize: [34, 34],
+        iconAnchor: [17, 34],
+        popupAnchor: [0, -34]
+      })
+    };
 
-legend.onAdd = function () {
-  const div = L.DomUtil.create('div', 'legend');
-  div.innerHTML = `
-    <h4>Punkty odbioru paczek</h4>
-    <div class="legend-item">
-      <img src="automat_paczkowy.svg"> Automat paczkowy
-    </div>
-    <div class="legend-item">
-      <img src="placowka_pocztowa.svg"> Placówka pocztowa
-    </div>
-    <div class="legend-item">
-      <img src="punkt_odbioru_sklep.svg"> Punkt partnerski
-    </div>
-    <div class="legend-item">
-      <img src="stacja_paliw.svg"> Stacja paliw
-    </div>
-  `;
-  return div;
-};
+    // Wczytanie GeoJSON
+    fetch('pkt_odbioru_paczek.geojson')
+      .then(response => response.json())
+      .then(data => {
 
-legend.addTo(map);
-</script>
+        L.geoJSON(data, {
+          pointToLayer: function (feature, latlng) {
+            const typ = feature.properties.Typ;
+            const icon = icons[typ] || icons["Automat paczkowy"];
+            return L.marker(latlng, { icon: icon });
+          },
+          onEachFeature: function (feature, layer) {
+            const p = feature.properties;
+
+            layer.bindPopup(
+              `<b>${p.Nazwa}</b><br>
+               Typ: ${p.Typ}<br>
+               Adres: ${p.Adres}<br>
+               Operator: ${p["Operator usługi"]}<br>
+               Godziny otwarcia: ${p["Godziny otwarcia"]}`
+            );
+          }
+        }).addTo(map);
+
+      });
+
+    // Legenda
+    const legend = L.control({ position: "bottomright" });
+
+    legend.onAdd = function () {
+      const div = L.DomUtil.create("div", "legend");
+
+      div.innerHTML =
+        "<h4>Legenda</h4>" +
+        "<div class='legend-item'><img src='automat_paczkowy.svg'> Automat paczkowy</div>" +
+        "<div class='legend-item'><img src='placowka_pocztowa.svg'> Placówka pocztowa</div>" +
+        "<div class='legend-item'><img src='punkt_odbioru_sklep.svg'> Punkt partnerski</div>" +
+        "<div class='legend-item'><img src='stacja_paliw.svg'> Stacja paliw</div>";
+
+      return div;
+    };
+
+    legend.addTo(map);
+  </script>
 
 </body>
 </html>
