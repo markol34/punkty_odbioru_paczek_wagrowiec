@@ -5,7 +5,6 @@
   <title>Punkty odbioru paczek – Wągrowiec</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
   <style>
@@ -20,7 +19,7 @@
       height: 100%;
     }
 
-    /* Pasek tytułu */
+    /* ===== TYTUŁ ===== */
     #title-bar {
       position: absolute;
       top: 10px;
@@ -36,33 +35,23 @@
       z-index: 1000;
     }
 
-    /* Legenda */
+    /* ===== LEGENDA ===== */
     .legend {
       background: white;
-      padding: 14px;
-      font-size: 14px;
+      padding: 12px;
       border: 2px solid #000;
       border-radius: 6px;
+      font-size: 14px;
     }
 
-    .legend h4 {
-      margin: 0 0 8px 0;
-      text-align: center;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .legend-item img {
+    .legend img {
       width: 26px;
       height: 26px;
-      margin-right: 8px;
+      vertical-align: middle;
+      margin-right: 6px;
     }
 
-    /* Autor */
+    /* ===== AUTOR ===== */
     .author {
       background: white;
       padding: 6px 10px;
@@ -71,8 +60,8 @@
       border-radius: 5px;
     }
 
-    /* 📱 MOBILE */
-    @media (max-width: 768px) {
+    /* ===== MOBILE ===== */
+    @media (max-width: 600px) {
       #title-bar {
         font-size: 16px;
         padding: 8px;
@@ -80,7 +69,6 @@
 
       .legend {
         font-size: 13px;
-        padding: 10px;
       }
     }
   </style>
@@ -97,12 +85,9 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-  /* WYKRYWANIE MOBILE */
-  const isMobile = window.innerWidth <= 768;
-
-  /* MAPA – bliżej niż wcześniej */
+  /* MAPA – bez + / – ZAWSZE */
   const map = L.map('map', {
-    zoomControl: !isMobile   // ❌ brak + / – na telefonie
+    zoomControl: false
   }).setView([52.808, 17.200], 14);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -161,31 +146,22 @@
       }).addTo(map);
     });
 
-  /* LEGENDA – ZWIJANA NA TELEFONIE */
+  /* LEGENDA – ZWIJANA NATYWNIE (DZIAŁA NA TEL.) */
   const legend = L.control({ position: "bottomright" });
-
   legend.onAdd = function () {
     const div = L.DomUtil.create("div", "legend");
 
     div.innerHTML = `
-      <h4 onclick="this.nextElementSibling.classList.toggle('hidden')" style="cursor:pointer">
-        Legenda (kliknij)
-      </h4>
-      <div class="legend-content">
-        <div class="legend-item"><img src="automat_paczkowy.svg"> Automat paczkowy</div>
-        <div class="legend-item"><img src="punkt_odbioru_sklep.svg"> Punkt partnerski</div>
-        <div class="legend-item"><img src="placowka_pocztowa.svg"> Placówka pocztowa</div>
-        <div class="legend-item"><img src="stacja_paliw.svg"> Stacja paliw</div>
-      </div>
+      <details>
+        <summary><b>Legenda (dotknij)</b></summary>
+        <div><img src="automat_paczkowy.svg"> Automat paczkowy</div>
+        <div><img src="punkt_odbioru_sklep.svg"> Punkt partnerski</div>
+        <div><img src="placowka_pocztowa.svg"> Placówka pocztowa</div>
+        <div><img src="stacja_paliw.svg"> Stacja paliw</div>
+      </details>
     `;
-
-    if (isMobile) {
-      div.querySelector(".legend-content").style.display = "none";
-    }
-
     return div;
   };
-
   legend.addTo(map);
 
   /* AUTOR */
