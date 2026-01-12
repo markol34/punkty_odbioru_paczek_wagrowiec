@@ -5,6 +5,7 @@
   <title>Punkty odbioru paczek – Wągrowiec</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
   <style>
@@ -85,7 +86,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-  /* MAPA – bez + / – ZAWSZE */
+  /* MAPA – bez + / – */
   const map = L.map('map', {
     zoomControl: false
   }).setView([52.808, 17.200], 14);
@@ -146,14 +147,14 @@
       }).addTo(map);
     });
 
-  /* LEGENDA – ZWIJANA NATYWNIE (DZIAŁA NA TEL.) */
+  /* LEGENDA – ZWIJANA */
   const legend = L.control({ position: "bottomright" });
   legend.onAdd = function () {
     const div = L.DomUtil.create("div", "legend");
 
     div.innerHTML = `
       <details>
-        <summary><b>Legenda (dotknij)</b></summary>
+        <summary><b>Legenda</b></summary>
         <div><img src="automat_paczkowy.svg"> Automat paczkowy</div>
         <div><img src="punkt_odbioru_sklep.svg"> Punkt partnerski</div>
         <div><img src="placowka_pocztowa.svg"> Placówka pocztowa</div>
