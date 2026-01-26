@@ -95,7 +95,22 @@
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
 
-  /* IKONY */
+  /* ===== GRANICA MIASTA ===== */
+  const cityBoundaryStyle = {
+    color: "#000000",
+    weight: 2,
+    fill: false
+  };
+
+  fetch('granica_miasta.geojson')
+    .then(r => r.json())
+    .then(data => {
+      L.geoJSON(data, {
+        style: cityBoundaryStyle
+      }).addTo(map);
+    });
+
+  /* ===== IKONY ===== */
   const icons = {
     "Automat paczkowy": L.icon({
       iconUrl: "automat_paczkowy.svg",
@@ -123,7 +138,7 @@
     })
   };
 
-  /* GEOJSON */
+  /* ===== PUNKTY ODBIORU ===== */
   fetch('pkt_odbioru_paczek.geojson')
     .then(r => r.json())
     .then(data => {
@@ -147,11 +162,10 @@
       }).addTo(map);
     });
 
-  /* LEGENDA – ZWIJANA */
+  /* ===== LEGENDA ===== */
   const legend = L.control({ position: "bottomright" });
   legend.onAdd = function () {
     const div = L.DomUtil.create("div", "legend");
-
     div.innerHTML = `
       <details>
         <summary><b>Legenda</b></summary>
@@ -159,13 +173,17 @@
         <div><img src="punkt_odbioru_sklep.svg"> Punkt partnerski</div>
         <div><img src="placowka_pocztowa.svg"> Placówka pocztowa</div>
         <div><img src="stacja_paliw.svg"> Stacja paliw</div>
+        <div style="margin-top:6px;">
+          <span style="display:inline-block;width:20px;height:2px;background:#000;margin-right:6px;"></span>
+          Granica miasta
+        </div>
       </details>
     `;
     return div;
   };
   legend.addTo(map);
 
-  /* AUTOR */
+  /* ===== AUTOR ===== */
   const author = L.control({ position: "bottomleft" });
   author.onAdd = function () {
     const div = L.DomUtil.create("div", "author");
