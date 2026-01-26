@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="stacja_paliw.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.69219276"
+     inkscape:cx="50.56395"
+     inkscape:cy="468.07771"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Warstwa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <ellipse
+       style="fill:#9b6e23;fill-opacity:1;stroke:#9b6e23;stroke-width:3.97499;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="path5"
+       cx="105"
+       cy="148.5"
+       rx="96.901344"
+       ry="96.90136" />
+    <path
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:4.65637;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 58.374479,215.76671 93.561961,0.1542 -0.35119,-134.727305 -93.521687,-0.11451 z"
+       id="path4" />
+    <rect
+       style="fill:#9b6e23;stroke:#9b6e23;stroke-width:3.63037;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect1"
+       width="59.648182"
+       height="24.21245"
+       x="75.175911"
+       y="92.438019" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:8.309;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       d="m 159.35951,119.17514 8.83513,11.20658 -0.11026,17.8776 -0.57364,50.88749 -19.00969,11.16761"
+       id="path2"
+       sodipodi:nodetypes="ccccc" />
+    <g
+       id="g1"
+       transform="matrix(1.1354161,0,0,1.1104549,0.5949989,15.044009)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#9b6e23;stroke-width:3.36979;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 115.61708,156.02122 -0.2132,17.34014 -0.21321,17.34016 -30.337924,-9.94927 v -35.74628 z"
+         id="path2-9-7-2"
+         sodipodi:nodetypes="cccccc" />
+      <path
+         style="fill:#9b6e23;fill-opacity:1;stroke:#9b6e23;stroke-width:3.36979;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m 96.750436,149.26595 -0.0369,10.84158 5.827434,2.09644 L 102.356,151.273 Z"
+         id="path5-9-6-3" />
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#9b6e23;stroke-width:3.36979;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 84.852746,145.00597 26.997824,-12.01019 28.78088,11.12769 -25.01437,11.89775 -30.764334,-11.01525"
+         id="path17-3" />
+      <path
+         style="fill:#9b6e23;fill-opacity:1;stroke:#9b6e23;stroke-width:3.36979;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+         d="m 96.750436,149.26595 c 15.441274,-7.57691 15.835994,-8.58099 24.653824,-12.57638 l 5.33466,2.06256 -8.75242,4.49446 -15.63051,8.02644"
+         id="path6-1-5-0"
+         sodipodi:nodetypes="ccccc" />
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:#9b6e23;stroke-width:3.36979;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 115.61708,156.02122 26.02857,-12.1951 -0.0183,34.93628 -26.43662,11.93912 z"
+         id="path18-8" />
+    </g>
+  </g>
+</svg>
